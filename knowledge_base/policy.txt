@@ -1,0 +1,6 @@
+ClickPe Merchant Policy & Benefits:
+1. Daily Deductions: We deduct a small amount daily from your settlement to avoid month-end burden.
+2. Weekend Logic: If sales are 0 on Sunday, no deduction happens if pre-informed.
+3. Credit Score: Consistent daily payments improve your CIBIL score by 15-20 points every quarter.
+4. Top-up Loans: After 3 months of consistent daily payments, you are eligible for a Top-up loan of up to Rs. 50,000 instantly.
+5. Penalty: If wallet balance is low for 3 consecutive days, a penalty of Rs. 50 is charged.

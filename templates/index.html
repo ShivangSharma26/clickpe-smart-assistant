@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClickPe.ai | YC(W23) </title>
+
+    <!-- TailwindCSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* ===== LIGHT MODE COLOR PALETTE ===== */
+            /* Primary Blues */
+            --color-primary-50: #eff6ff;
+            --color-primary-100: #dbeafe;
+            --color-primary-200: #bfdbfe;
+            --color-primary-300: #93c5fd;
+            --color-primary-400: #60a5fa;
+            --color-primary-500: #3b82f6;
+            --color-primary-600: #2563eb;
+            --color-primary-700: #1d4ed8;
+            --color-primary-800: #1e40af;
+            --color-primary-900: #1e3a8a;
+
+            /* Whites & Greys */
+            --color-white: #ffffff;
+            --color-grey-50: #f9fafb;
+            --color-grey-100: #f3f4f6;
+            --color-grey-200: #e5e7eb;
+            --color-grey-300: #d1d5db;
+            --color-grey-400: #9ca3af;
+            --color-grey-500: #6b7280;
+            --color-grey-600: #4b5563;
+            --color-grey-700: #374151;
+
+            /* Semantic Colors */
+            --color-success: #10b981;
+            --color-error: #ef4444;
+            --color-warning: #f59e0b;
+            --color-info: #3b82f6;
+
+            /* Light Mode - Backgrounds & Surfaces */
+            --bg-primary: var(--color-white);
+            --bg-secondary: var(--color-grey-50);
+            --bg-tertiary: var(--color-grey-100);
+            --surface: var(--color-white);
+            --surface-hover: var(--color-grey-50);
+
+            /* Light Mode - Text */
+            --text-primary: #1a1a1a;
+            --text-secondary: var(--color-grey-600);
+            --text-tertiary: var(--color-grey-500);
+            --text-inverse: var(--color-white);
+
+            /* Light Mode - Borders */
+            --border-light: var(--color-grey-200);
+            --border-medium: var(--color-grey-300);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html.dark {
+                /* Dark Mode - Backgrounds & Surfaces */
+                --bg-primary: #0f172a;
+                --bg-secondary: #1a2847;
+                --bg-tertiary: #2a3b5c;
+                --surface: #1a2847;
+                --surface-hover: #2a3b5c;
+
+                /* Dark Mode - Text */
+                --text-primary: #f8fafc;
+                --text-secondary: #cbd5e1;
+                --text-tertiary: #94a3b8;
+                --text-inverse: #0f172a;
+
+                /* Dark Mode - Borders */
+                --border-light: #334155;
+                --border-medium: #475569;
+            }
+        }
+
+        html.dark {
+            /* Dark Mode - Backgrounds & Surfaces */
+            --bg-primary: #0f172a;
+            --bg-secondary: #1a2847;
+            --bg-tertiary: #2a3b5c;
+            --surface: #1a2847;
+            --surface-hover: #2a3b5c;
+
+            /* Dark Mode - Text */
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-tertiary: #94a3b8;
+            --text-inverse: #0f172a;
+
+            /* Dark Mode - Borders */
+            --border-light: #334155;
+            --border-medium: #475569;
+        }
+
+        * {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* Glassmorphism Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+        }
+
+        html.dark .glass {
+            background: rgba(26, 40, 71, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--border-light);
+        }
+
+        /* Smooth Transitions */
+        * {
+            transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary-300);
+            border-radius: 10px;
+        }
+
+        html.dark ::-webkit-scrollbar-thumb {
+            background: var(--color-primary-700);
+        }
+
+        /* Thinking Animation */
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 1; }
+        }
+
+        .thinking-dot {
+            animation: pulse-dot 1.4s infinite;
+        }
+
+        .thinking-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .thinking-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        /* Chat Message Entrance Animation */
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .chat-message {
+            animation: slideInUp 0.3s ease-out;
+        }
+
+        /* Send Button */
+        .send-button {
+            transition: all 0.3s ease-in-out;
+            background-color: var(--color-primary-600);
+            color: var(--text-inverse);
+        }
+
+        .send-button:hover {
+            background-color: var(--color-primary-700);
+            transform: scale(1.05);
+        }
+
+        .send-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Status Badge Styles */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: capitalize;
+        }
+
+        .status-success {
+            background-color: var(--color-success);
+            color: var(--color-white);
+        }
+
+        .status-failed {
+            background-color: transparent;
+            color: var(--color-error);
+            border: 1.5px solid var(--color-error);
+        }
+
+        .status-pending {
+            background-color: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-light);
+        }
+
+        /* Table Hover Effect */
+        .table-row {
+            transition: all 0.3s ease-in-out;
+        }
+
+        .table-row:hover {
+            background-color: var(--surface-hover);
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none;
+        }
+
+        /* Sidebar Active State */
+        .nav-item-active {
+            background-color: var(--color-primary-600);
+            color: var(--text-inverse);
+        }
+
+        .nav-item:not(.nav-item-active) {
+            color: var(--text-secondary);
+        }
+
+        .nav-item:not(.nav-item-active):hover {
+            background-color: var(--surface-hover);
+            color: var(--text-primary);
+        }
+
+        /* Card Styling */
+        .card {
+            background-color: var(--surface);
+            border: 1px solid var(--border-light);
+            border-radius: 1.5rem;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.1);
+        }
+
+        /* Input Styling */
+        input, textarea {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border-light);
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--color-primary-500);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Accent Text */
+        .text-accent {
+            color: var(--color-primary-600);
+        }
+
+        /* Logo Image */
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Main Container -->
+    <div class="flex h-screen overflow-hidden">
+
+        <!-- Sidebar -->
+        <aside class="w-72 glass fixed h-full z-10 flex flex-col" style="background-color: var(--surface); border-right: 1px solid var(--border-light);">
+            <!-- Logo Section -->
+            <div class="p-6 border-b" style="border-color: var(--border-light);">
+                <div class="flex items-center gap-3">
+                    <img src="/static/clickpe.png" alt="ClickPe Logo" class="logo-image">
+                    <div>
+                        <h1 class="text-2xl font-bold tracking-tight" style="color: var(--text-primary);">ClickPe</h1>
+                        <p class="text-sm mt-0.5" style="color: var(--text-tertiary);">YC (W23)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="flex-1 p-4 space-y-2">
+                <button onclick="switchView('chat')" id="nav-chat" class="nav-item nav-item-active w-full flex items-center gap-3 px-4 py-3 rounded-3xl font-medium transition-all duration-300 hover:scale-[1.02]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                    </svg>
+                    <span>Merchant AI</span>
+                </button>
+
+                <button onclick="switchView('dashboard')" id="nav-dashboard" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-3xl font-medium transition-all duration-300 hover:scale-[1.02]">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                    </svg>
+                    <span>Ops Co-Pilot</span>
+                </button>
+            </nav>
+
+            <!-- Dark Mode Toggle -->
+            <div class="p-4 border-t" style="border-color: var(--border-light);">
+                <button onclick="toggleDarkMode()" class="w-full flex items-center justify-between px-4 py-3 rounded-3xl transition-all duration-300" style="color: var(--text-primary); background-color: var(--bg-secondary);">
+                    <span class="font-medium">Dark Mode</span>
+                    <div class="relative w-12 h-6 rounded-full" style="background-color: var(--bg-tertiary);">
+                        <div id="toggle-circle" class="absolute top-1 left-1 w-4 h-4 rounded-full transition-all duration-300" style="background-color: var(--color-primary-600); transform: translateX(0);"></div>
+                    </div>
+                </button>
+            </div>
+
+            <!-- User Profile -->
+            <div class="p-4 border-t" style="border-color: var(--border-light);">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full flex items-center justify-center font-semibold" style="background: linear-gradient(135deg, #2563eb, #3b82f6); color: var(--color-white);">
+                        A
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-semibold text-sm" style="color: var(--text-primary);">Admin User</p>
+                        <p class="text-xs" style="color: var(--text-tertiary);">admin@clickpe.com</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 ml-72 overflow-hidden">
+
+            <!-- Header -->
+            <header class="glass sticky top-0 z-10 px-8 py-4" style="background-color: var(--surface); border-bottom: 1px solid var(--border-light);">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h2 id="page-title" class="text-2xl font-bold" style="color: var(--text-primary);">Merchant AI</h2>
+                        <p id="page-subtitle" class="text-sm mt-1" style="color: var(--text-tertiary);">Your intelligent assistant</p>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <p class="text-xs" style="color: var(--text-tertiary);">System Status</p>
+                            <div class="flex items-center gap-2 mt-1">
+                                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                <span class="text-sm font-medium" style="color: var(--text-primary);">Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- VIEW A: MERCHANT AI (CHATBOT) -->
+            <section id="view-chat" class="h-[calc(100vh-88px)] flex flex-col" style="background-color: var(--bg-primary);">
+                <!-- Chat Messages Container -->
+                <div id="chat-messages" class="flex-1 overflow-y-auto px-8 py-6 space-y-4">
+                    <!-- Welcome Message -->
+                    <div class="flex justify-start chat-message">
+                        <div class="max-w-md px-5 py-3 rounded-3xl rounded-tl-lg" style="background-color: var(--bg-secondary); color: var(--text-primary);">
+                            <p class="text-sm">Hello! I'm ClickPe AI. How can I assist you with your transactions today?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thinking Indicator (Hidden by default) -->
+                <div id="thinking-indicator" class="hidden px-8">
+                    <div class="flex justify-start">
+                        <div class="px-5 py-3 rounded-3xl rounded-tl-lg flex items-center gap-1" style="background-color: var(--bg-secondary);">
+                            <div class="w-2 h-2 rounded-full thinking-dot" style="background-color: var(--text-tertiary);"></div>
+                            <div class="w-2 h-2 rounded-full thinking-dot" style="background-color: var(--text-tertiary);"></div>
+                            <div class="w-2 h-2 rounded-full thinking-dot" style="background-color: var(--text-tertiary);"></div>
+                        </div>
+                    </div>
+                </div>
+                <!-- CSV Upload Section -->
+                <div id="upload-block" style="padding:12px;">
+                <input id="csv-file" type="file" accept=".csv" />
+                 <button id="upload-btn" class="btn">Upload CSV</button>
+                 <span id="upload-status" style="margin-left:12px;color:#9aa;"> </span>
+                </div>
+
+
+                <!-- Chat Input Area -->
+                <div class="px-8 py-6" style="border-top: 1px solid var(--border-light);">
+                    <div class="flex items-end gap-3">
+                        <div class="flex-1 rounded-3xl px-5 py-3 border transition-all duration-300" style="background-color: var(--bg-secondary); border-color: var(--border-light);">
+                            <textarea
+                                id="chat-input"
+                                rows="1"
+                                placeholder="Type your message..."
+                                class="w-full resize-none outline-none text-sm"
+                                style="background-color: transparent; color: var(--text-primary);"
+                                onkeydown="handleChatKeydown(event)"
+                            ></textarea>
+                        </div>
+                        <button
+                            onclick="sendChatMessage()"
+                            class="send-button w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0"
+                        >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--text-inverse);">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- VIEW B: OPS CO-PILOT (DASHBOARD) -->
+            <section id="view-dashboard" class="hidden h-[calc(100vh-88px)] overflow-y-auto" style="background-color: var(--bg-primary);">
+                <div class="p-8 space-y-6">
+
+                    <!-- Stats Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Total Volume Card -->
+                        <div class="card p-6">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <p class="text-sm font-medium" style="color: var(--text-secondary);">Total Volume</p>
+                                    <h3 id="total-volume" class="text-3xl font-bold mt-2" style="color: var(--color-primary-600);">₹0</h3>
+                                    <p class="text-xs mt-2" style="color: var(--color-success);">+12.5% from last month</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: var(--color-primary-100);">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--color-primary-600);">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Failed Transactions Card -->
+                        <div class="card p-6">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <p class="text-sm font-medium" style="color: var(--text-secondary);">Failed Transactions</p>
+                                    <h3 id="failed-transactions" class="text-3xl font-bold mt-2" style="color: var(--color-error);">0</h3>
+                                    <p class="text-xs mt-2" style="color: var(--color-error);">Requires attention</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(239, 68, 68, 0.1);">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--color-error);">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Database Status Card -->
+                        <div class="card p-6">
+                            <div class="flex items-start justify-between">
+                                <div>
+                                    <p class="text-sm font-medium" style="color: var(--text-secondary);">Database Status</p>
+                                    <h3 class="text-xl font-bold mt-2" style="color: var(--text-primary);">Supabase Connected</h3>
+                                    <p class="text-xs mt-2" style="color: var(--color-success);">All systems operational</p>
+                                </div>
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(16, 185, 129, 0.1);">
+                                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color: var(--color-success);">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Transaction Logs Table -->
+                    <div class="card overflow-hidden">
+                        <div class="px-6 py-4" style="border-bottom: 1px solid var(--border-light);">
+                            <h3 class="text-lg font-bold" style="color: var(--text-primary);">Transaction Logs</h3>
+                            <p class="text-sm mt-1" style="color: var(--text-tertiary);">Recent transaction activity</p>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full">
+                                <thead>
+                                    <tr style="border-bottom: 1px solid var(--border-light);">
+                                        <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: var(--text-tertiary);">ID</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: var(--text-tertiary);">Status</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: var(--text-tertiary);">Amount</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: var(--text-tertiary);">Reason</th>
+                                        <th class="px-6 py-4 text-left text-xs font-semibold uppercase tracking-wider" style="color: var(--text-tertiary);">Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="transaction-table-body">
+                                    <!-- Rows will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+   <script>
+        // ============================================
+        // 1. GLOBAL CONFIGURATION (The Fix)
+        // ============================================
+        // This HARDCODED ID 'm_001' matches the merchant_id used in main.py logic.
+        // It ensures the Chatbot and the CSV Uploader talk to the same database row.
+        const CURRENT_SESSION_ID = 'm_001'; 
+        let isDarkMode = false;
+        let currentView = 'chat';
+
+        // ============================================
+        // 2. BACKEND API
+        // ============================================
+        const BackendAPI = {
+            async sendMessage(text) {
+                try {
+                    const response = await fetch('/api/chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ session_id: CURRENT_SESSION_ID, message: text })
+                    });
+                    if (!response.ok) throw new Error("Server Error");
+                    const data = await response.json();
+                    return { response: data.response ?? data.reply ?? "No response" };
+                } catch (error) {
+                    console.error("Chat Error:", error);
+                    return { response: "⚠️ Error: Could not connect to ClickPe Server." };
+                }
+            },
+
+            async fetchDashboardStats() {
+                try {
+                    const response = await fetch('/api/dashboard');
+                    const data = await response.json();
+                    const totalTx = data.total_volume ?? 0;
+                    const failed = data.failed_count ?? 0;
+                    // Prevent division by zero
+                    const successRate = totalTx > 0 ? (((totalTx - failed) / totalTx) * 100).toFixed(1) : "0.0";
+                    
+                    return {
+                        total_volume: totalTx,
+                        failed_transactions: failed,
+                        success_rate: Number(successRate),
+                        currency: '₹'
+                    };
+                } catch (error) {
+                    console.error("Dashboard Error:", error);
+                    return { total_volume: 0, failed_transactions: 0, success_rate: 0, currency: '₹' };
+                }
+            },
+
+            async fetchTransactionLogs(limit = 10, offset = 0) {
+                try {
+                    const response = await fetch(`/api/transactions/logs?limit=${limit}&offset=${offset}`);
+                    const data = await response.json();
+                    const logs = data.transactions ?? data.logs ?? [];
+                    return logs.map(log => ({
+                        id: log.id ?? log.txn_id ?? 'N/A',
+                        status: (log.status ?? 'unknown').toString().toLowerCase(),
+                        amount: log.amount ?? log.gross_sales ?? 0,
+                        reason: log.reason ?? '-',
+                        date: log.created_at ? new Date(log.created_at).toLocaleDateString() : (log.date ?? '')
+                    }));
+                } catch (error) {
+                    console.error("Fetch logs error:", error);
+                    return [];
+                }
+            }
+        };
+
+        // ============================================
+        // 3. EVENT LISTENERS & UI LOGIC
+        // ============================================
+        
+        // --- CSV Upload Logic ---
+        document.addEventListener('DOMContentLoaded', function () {
+            // Init Dark Mode
+            if (localStorage.getItem('darkMode') === 'true') toggleDarkMode();
+
+            // Bind Upload Button
+            const uploadBtn = document.getElementById('upload-btn');
+            if (uploadBtn) {
+                uploadBtn.addEventListener('click', async (ev) => {
+                    ev.preventDefault();
+                    const fileInput = document.getElementById('csv-file');
+                    const status = document.getElementById('upload-status');
+
+                    if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                        if (status) status.textContent = 'Choose a CSV file first.';
+                        return;
+                    }
+
+                    const fd = new FormData();
+                    fd.append('merchant_id', CURRENT_SESSION_ID); // <--- CRITICAL FIX
+                    fd.append('file', fileInput.files[0]);
+
+                    if (status) status.textContent = 'Uploading...';
+                    
+                    try {
+                        const resp = await fetch('/api/upload-csv', { method: 'POST', body: fd });
+                        const data = await resp.json();
+                        
+                        if (resp.ok) {
+                            if (status) status.textContent = 'Uploaded';
+                            addMessageToChat(`CSV uploaded successfully. Avg daily sales: ₹${data.avg_daily ?? 'N/A'}.`, 'ai');
+                        } else {
+                            if (status) status.textContent = 'Failed';
+                            addMessageToChat('Upload failed: ' + (data.error || 'Unknown error'), 'ai');
+                        }
+                    } catch (err) {
+                        console.error(err);
+                        if (status) status.textContent = 'Error';
+                    }
+                });
+            }
+        });
+
+        // --- Chat Logic ---
+        async function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            if (!message) return;
+
+            addMessageToChat(message, 'user');
+            input.value = '';
+            showThinking();
+
+            const result = await BackendAPI.sendMessage(message);
+            
+            hideThinking();
+            addMessageToChat(result.response, 'ai');
+        }
+
+        function handleChatKeydown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendChatMessage();
+            }
+        }
+
+        // --- UI Helpers ---
+        function addMessageToChat(message, sender) {
+            const container = document.getElementById('chat-messages');
+            const div = document.createElement('div');
+            div.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'} chat-message`;
+            
+            // Clean up Markdown-style bolding for display
+            const cleanMsg = message.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>');
+
+            div.innerHTML = `
+                <div class="max-w-md px-5 py-3 rounded-3xl ${sender === 'user' ? 'rounded-tr-lg' : 'rounded-tl-lg'}" 
+                     style="background-color: ${sender === 'user' ? 'var(--color-primary-600)' : 'var(--bg-secondary)'}; 
+                            color: ${sender === 'user' ? 'var(--color-white)' : 'var(--text-primary)'};">
+                    <p class="text-sm">${cleanMsg}</p>
+                </div>
+            `;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function showThinking() {
+            document.getElementById('thinking-indicator').classList.remove('hidden');
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideThinking() {
+            document.getElementById('thinking-indicator').classList.add('hidden');
+        }
+
+        // --- View Switching ---
+        function switchView(view) {
+            currentView = view;
+            const chatView = document.getElementById('view-chat');
+            const dashView = document.getElementById('view-dashboard');
+            const navChat = document.getElementById('nav-chat');
+            const navDash = document.getElementById('nav-dashboard');
+
+            if (view === 'chat') {
+                chatView.classList.remove('hidden');
+                dashView.classList.add('hidden');
+                navChat.classList.add('nav-item-active');
+                navDash.classList.remove('nav-item-active');
+                document.getElementById('page-title').textContent = 'Merchant AI';
+                document.getElementById('page-subtitle').textContent = 'Your intelligent assistant';
+            } else {
+                chatView.classList.add('hidden');
+                dashView.classList.remove('hidden');
+                navChat.classList.remove('nav-item-active');
+                navDash.classList.add('nav-item-active');
+                document.getElementById('page-title').textContent = 'Ops Co-Pilot';
+                document.getElementById('page-subtitle').textContent = 'Real-time operations dashboard';
+                loadDashboardData();
+            }
+        }
+
+        async function loadDashboardData() {
+            const stats = await BackendAPI.fetchDashboardStats();
+            document.getElementById('total-volume').textContent = `₹${stats.total_volume.toLocaleString()}`;
+            document.getElementById('failed-transactions').textContent = stats.failed_transactions;
+
+            const logs = await BackendAPI.fetchTransactionLogs();
+            const tbody = document.getElementById('transaction-table-body');
+            tbody.innerHTML = '';
+            
+            logs.forEach(txn => {
+                const tr = document.createElement('tr');
+                tr.className = 'table-row';
+                tr.innerHTML = `
+                    <td class="px-6 py-4 text-sm font-mono">${txn.id}</td>
+                    <td class="px-6 py-4"><span class="status-badge ${txn.status === 'failed' ? 'status-failed' : 'status-success'}">${txn.status}</span></td>
+                    <td class="px-6 py-4 text-sm font-semibold">₹${txn.amount}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${txn.reason}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">${txn.date}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- Dark Mode ---
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+            document.getElementById('toggle-circle').style.transform = isDarkMode ? 'translateX(24px)' : 'translateX(0)';
+        }
+    </script>

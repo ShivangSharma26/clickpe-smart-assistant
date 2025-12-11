@@ -1,0 +1,12 @@
+streamlit
+langchain
+langgraph
+langchain-openai
+langchain-community
+chromadb
+python-dotenv
+tiktoken
+langchain-google-genai
+langchain-community 
+langchain-core 
+langchain-text-splitters
