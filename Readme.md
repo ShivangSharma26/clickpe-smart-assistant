@@ -1,6 +1,7 @@
 # 🚀 ClickPe Smart Assistant: AI Co-Pilot for FinTech Ops
 
 A Production-Grade Hybrid AI System for Loan Underwriting, Daily Cashflow Planning, and Failure Forensics.
+video link -: https://drive.google.com/file/d/1YWd1MJJhYsW4ZDz4qJsM-_1OzzCF1TTE/view?usp=sharing
 
 ---
 
